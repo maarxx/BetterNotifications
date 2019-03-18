@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Toggles
+namespace BetterNotifications
 {
     // DEV DEBUG. Outputs identical log messages only once.
     internal static class DebugUtil
