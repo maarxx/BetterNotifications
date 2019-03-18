@@ -68,6 +68,7 @@
     <Content Include="About\Preview.png" />
     <Content Include="Defs\UpdateFeatureDefs\UpdateFeatures.xml" />
     <Content Include="Languages\English\Keyed\BetterNotifications.xml" />
+    <Content Include="backlog.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
