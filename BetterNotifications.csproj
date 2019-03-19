@@ -56,8 +56,10 @@
   <ItemGroup>
     <Compile Include="Source\AlertsReadout_Patch.cs" />
     <Compile Include="Source\Alert_Patch.cs" />
+    <Compile Include="Source\Component.cs" />
     <Compile Include="Source\Controller.cs" />
     <Compile Include="Source\DebugUtility.cs" />
+    <Compile Include="Source\LetterSet.cs" />
     <Compile Include="Source\Letter_Patch.cs" />
     <Compile Include="Source\ModHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
