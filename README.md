@@ -9,7 +9,7 @@ The timers for both features can be set in the mod settings.
 ![](https://github.com/krafs/BetterNotifications/blob/master/About/Preview.png)
 
 ## Download
-[Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1666097824)
+[Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1688596869)
 
 [GitHub Latest Release](https://github.com/krafs/BetterNotifications/releases)
 
