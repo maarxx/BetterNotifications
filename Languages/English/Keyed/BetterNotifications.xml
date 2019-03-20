@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <BN_RansomDemand>Ransom Demand</BN_RansomDemand>
+  <BN_Death>Death</BN_Death>
+  <BN_ThreatBig>Threat Big</BN_ThreatBig>
+  <BN_ThreatSmall>Threat Small</BN_ThreatSmall>
+  <BN_NegativeEvent>Negative Event</BN_NegativeEvent>
+  <BN_NeutralEvent>Neutral Event</BN_NeutralEvent>
+  <BN_PositiveEvent>Positive Event</BN_PositiveEvent>
+  <BN_LetterSliderLabel>Letter autoclose timer: {0}h.</BN_LetterSliderLabel>
+  <BN_LetterSliderTooltip>The time a letter should stay on screen before being automatically closed.</BN_LetterSliderTooltip>
+  <BN_AlertSliderLabel>Alert sleep timer: {0}h.</BN_AlertSliderLabel>
+  <BN_AlertSliderTooltip>The time an alert should stay asleep after having been right-clicked.</BN_AlertSliderTooltip>
+</LanguageData>
