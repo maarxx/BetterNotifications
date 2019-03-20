@@ -1,7 +1,9 @@
-﻿using Harmony;
+﻿using BetterNotifications;
+using Harmony;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Verse;
@@ -11,9 +13,9 @@ namespace Toggles.Patches
 {
     [HarmonyPatch(typeof(Alert))]
     [HarmonyPatch("DrawAt")]
-    class Alert_Patch
+    class AlertSleeper
     {
-        internal Alert_Patch()
+        internal AlertSleeper()
         {
             UIRoot_Play ui = (UIRoot_Play)Find.UIRoot;
             alertsReadout = ui.alerts;
@@ -30,17 +32,19 @@ namespace Toggles.Patches
             return (List<Alert>)AccessTools.Field(typeof(AlertsReadout), "activeAlerts").GetValue(alertsReadout);
         }
 
+        // Removes an alert from all available alerts, and from all alerts currently active.
         static void RemoveAlert(Alert alert)
         {
             List<Alert> all = GetAllAlerts();
-            all.RemoveAll(x => x == alert);
+            all.Remove(alert);
             AccessTools.Field(typeof(AlertsReadout), "AllAlerts").SetValue(alertsReadout, all);
 
             List<Alert> active = GetActiveAlerts();
-            active.RemoveAll(x => x == alert);
+            active.Remove(alert);
             AccessTools.Field(typeof(AlertsReadout), "activeAlerts").SetValue(alertsReadout, active);
         }
 
+        // Adds an alert to all available alerts, unless already in list.
         static void AddAlert(Alert alert)
         {
             List<Alert> list = GetAllAlerts();
@@ -49,19 +53,22 @@ namespace Toggles.Patches
             AccessTools.Field(typeof(AlertsReadout), "AllAlerts").SetValue(alertsReadout, list);
         }
 
+        // Replaces an alert's GetLabel() to get Alert instance. Then, also replaces the invisible button over an alert with clickable one.
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
             instructions
                 .MethodReplacer(GetLabel_Method, GetLabel_Proxy_Method)
                 .MethodReplacer(ButtonInvisible_Method, ButtonInvisible_Proxy_Method);
 
+        // The clicked alert.
         static Alert alertObject;
 
         static MethodInfo GetLabel_Method { get; } = AccessTools.Method(typeof(Alert), "GetLabel");
-        static MethodInfo GetLabel_Proxy_Method { get; } = AccessTools.Method(typeof(Alert_Patch), "GetLabel_Proxy", new Type[] { typeof(Alert) });
+        static MethodInfo GetLabel_Proxy_Method { get; } = AccessTools.Method(typeof(AlertSleeper), "GetLabel_Proxy", new Type[] { typeof(Alert) });
 
         static MethodInfo ButtonInvisible_Method { get; } = AccessTools.Method(typeof(Widgets), "ButtonInvisible", new Type[] { typeof(Rect), typeof(bool) });
-        static MethodInfo ButtonInvisible_Proxy_Method { get; } = AccessTools.Method(typeof(Alert_Patch), "ButtonInvisible_Proxy", new Type[] { typeof(Rect), typeof(bool) });
+        static MethodInfo ButtonInvisible_Proxy_Method { get; } = AccessTools.Method(typeof(AlertSleeper), "ButtonInvisible_Proxy", new Type[] { typeof(Rect), typeof(bool) });
 
+        // List of all alerts currently sleeping.
         public static Dictionary<Alert, int> SleepingAlerts { get; set; } = new Dictionary<Alert, int>();
 
         static string GetLabel_Proxy(Alert instance)
@@ -70,18 +77,21 @@ namespace Toggles.Patches
             return alertObject.GetLabel();
         }
 
+        // When user right-clicks an alert
         static bool ButtonInvisible_Proxy(Rect rect, bool doMouseoverSound = false)
         {
             if (Event.current.type == EventType.MouseDown && Event.current.button == 1 && Mouse.IsOver(rect))
             {
                 SoundDefOf.Click.PlayOneShotOnCamera(null);
 
+                // Put alert to sleep
                 SleepAlert(alertObject);
             }
 
             return GUI.Button(rect, string.Empty, Widgets.EmptyStyle);
         }
 
+        // Adds alert to list of sleeping alerts, and removes it from game's list of available alerts.
         static void SleepAlert(Alert alert)
         {
             if (!SleepingAlerts.ContainsKey(alert))
@@ -91,19 +101,21 @@ namespace Toggles.Patches
             }
         }
 
+        // Checks every tick whether an alert should stay asleep or be woken up.
         internal static void CheckIfSleeping()
         {
-            HashSet<Alert> wakeup = new HashSet<Alert>();
-            foreach (KeyValuePair<Alert, int> sleeper in SleepingAlerts)
+            if (SleepingAlerts.Count > 0)
             {
-                if ((sleeper.Value + (GenDate.TicksPerHour * 2)) < Find.TickManager.TicksGame)
+                for (int i = SleepingAlerts.Count - 1; i > -1; i--)
                 {
-                    AddAlert(sleeper.Key);
-                    wakeup.Add(sleeper.Key);
+                    if ((SleepingAlerts.Values.ToArray()[i] + (GenDate.TicksPerHour * Controller.AlertTime)) < Find.TickManager.TicksGame)
+                    {
+                        Alert alert = SleepingAlerts.Keys.ToArray()[i];
+                        AddAlert(alert);
+                        SleepingAlerts.Remove(alert);
+                    }
                 }
             }
-            foreach (Alert alert in wakeup)
-                SleepingAlerts.Remove(alert);
         }
     }
 }

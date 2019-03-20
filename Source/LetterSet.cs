@@ -9,11 +9,11 @@ namespace BetterNotifications
             this.def = def;
             active = false;
         }
-        LetterDef def;
-        bool active;
+        internal LetterDef def;
+        internal bool active;
 
         internal string LabelCap => def.LabelCap;
-        internal string defName => def.defName;
+        internal string DefName => def.defName;
 
         internal void ExposeData()
         {

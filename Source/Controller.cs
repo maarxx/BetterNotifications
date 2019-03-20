@@ -1,5 +1,4 @@
 ﻿using Harmony;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Verse;
@@ -12,27 +11,27 @@ namespace BetterNotifications
         static Controller()
         {
             InitLetterSettings();
+            ModHandler.InitSettings();
 
             // Do patches
             HarmonyInstance harmony = HarmonyInstance.Create("BetterNotifications");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
-        static void InitLetterSettings()
+        internal static void InitLetterSettings()
         {
             foreach (LetterDef def in DefDatabase<LetterDef>.AllDefs)
-                LetterSets.Add(new LetterSet(def));
+                LetterSets.Add(def.defName, new LetterSet(def));
         }
 
-        internal static HashSet<LetterSet> LetterSets;
+        internal static Dictionary<string, LetterSet> LetterSets = new Dictionary<string, LetterSet>();
 
         internal static int AlertTime => Settings.alertTime;
         internal static int LetterTime => Settings.letterTime;
-        internal static Dictionary<LetterDef, bool> LetterSettings => Settings.letterSettings;
 
         internal static bool LetterSetting(LetterDef def)
         {
-            return LetterSets[def];
+            return LetterSets[def.defName].active;
         }
     }
 }

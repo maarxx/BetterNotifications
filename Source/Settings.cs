@@ -9,7 +9,7 @@ namespace BetterNotifications
             base.ExposeData();
             Scribe_Values.Look<int>(ref letterTime, "LetterTime", 2);
             Scribe_Values.Look<int>(ref alertTime, "AlertTime", 2);
-            foreach (LetterSet letter in Controller.LetterSets)
+            foreach (LetterSet letter in Controller.LetterSets.Values)
                 letter.ExposeData();
         }
 

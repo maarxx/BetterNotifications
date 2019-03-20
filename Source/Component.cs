@@ -12,14 +12,14 @@ namespace BetterNotifications
         {
             base.FinalizeInit();
 
-            new Alert_Patch();
+            new AlertSleeper();
         }
 
         public override void GameComponentTick()
         {
             base.GameComponentTick();
-            Alert_Patch.CheckIfSleeping();
-            Letter_Patch.CheckLetters();
+            AlertSleeper.CheckIfSleeping();
+            LetterTimer.CheckLetters();
         }
     }
 }

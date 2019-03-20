@@ -6,7 +6,10 @@
     <li>1.0</li>
   </supportedVersions>
   <description>&lt;b&gt;Slightly improved notifications&lt;/b&gt;
+  
 - &lt;i&gt;Put alerts to sleep by right-clicking&lt;/i&gt;
 - &lt;i&gt;Auto-close letters&lt;/i&gt;
+
+    Timers and letter categories can be set in mod settings.
   </description>
 </ModMetaData>

@@ -4,7 +4,7 @@ using Verse;
 
 namespace BetterNotifications
 {
-    internal class Letter_Patch
+    internal class LetterTimer
     {
         static Dictionary<Letter, int> TimedLetters { get; } = new Dictionary<Letter, int>();
 
@@ -14,23 +14,22 @@ namespace BetterNotifications
 
             if (ticks % GenDate.TicksPerHour == 0)
             {
-                HashSet<Letter> remove = new HashSet<Letter>();
+                List<Letter> letters = Find.LetterStack.LettersListForReading;
 
-                foreach (Letter letter in Find.LetterStack.LettersListForReading)
+                for (int i = letters.Count - 1; i > -1; i--)
                 {
+                    Letter letter = letters[i];
                     if (Controller.LetterSetting(letter.def))
                     {
                         if (!TimedLetters.ContainsKey(letter))
                             TimedLetters.Add(letter, ticks);
 
-                        if (TimedLetters[letter] + (GenDate.TicksPerHour * Controller.LetterTime) > ticks)
-                            remove.Add(letter);
+                        if ((TimedLetters[letter] + (GenDate.TicksPerHour * Controller.LetterTime)) < ticks)
+                        {
+                            Find.LetterStack.RemoveLetter(letter);
+                            TimedLetters.Remove(letter);
+                        }
                     }
-                }
-                foreach (Letter letter in remove)
-                {
-                    TimedLetters.Remove(letter);
-                    Find.LetterStack.RemoveLetter(letter);
                 }
             }
         }
