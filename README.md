@@ -1,7 +1,8 @@
 **_Better Notifications_** is a RimWorld mod that adds slight improvements to notifications.
 
-**Put alerts to sleep by right-clicking
-**Auto-close letters
+**Put alerts to sleep by right-clicking**
+
+**Auto-close letters**
 
 The timers for both features can be set in the mod settings.
 
