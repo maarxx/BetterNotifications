@@ -1,5 +1,5 @@
 ﻿using BetterNotifications;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,7 @@ using Verse.Sound;
 
 namespace Toggles.Patches
 {
-    [HarmonyPatch(typeof(Alert))]
-    [HarmonyPatch("DrawAt")]
+    [HarmonyPatch(typeof(Alert), "DrawAt", new Type[] { typeof(float), typeof(bool) })]
     class AlertSleeper
     {
         internal AlertSleeper()
@@ -108,7 +107,7 @@ namespace Toggles.Patches
             {
                 for (int i = SleepingAlerts.Count - 1; i > -1; i--)
                 {
-                    if ((SleepingAlerts.Values.ToArray()[i] + (GenDate.TicksPerHour * Controller.AlertTime)) < Find.TickManager.TicksGame)
+                    if ((SleepingAlerts.Values.ToArray()[i] + (GenDate.TicksPerHour * Controller.AlertTime)) <= Find.TickManager.TicksGame)
                     {
                         Alert alert = SleepingAlerts.Keys.ToArray()[i];
                         AddAlert(alert);

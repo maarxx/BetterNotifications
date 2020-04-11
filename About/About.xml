@@ -1,15 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Better Notifications</name>
-  <author>krafs</author>
-  <supportedVersions>
-    <li>1.0</li>
-  </supportedVersions>
+  	<packageId>krafs.BetterNotifications</packageId>
+	<author>krafs</author>
+	<url>https://github.com/krafs/BetterNotifications</url>
+	<supportedVersions>
+		<li>1.0</li>
+		<li>1.1</li>
+	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+		</li>
+		<li>
+			<packageId>UnlimitedHugs.HugsLib</packageId>
+			<displayName>HugsLib</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
+			<downloadUrl>https://github.com/UnlimitedHugs/RimworldHugsLib</downloadUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>	
+		<li>brrainz.harmony</li>
+		<li>UnlimitedHugs.HugsLib</li>
+	</loadAfter>	
   <description>&lt;b&gt;Slightly improved notifications&lt;/b&gt;
   
 - &lt;i&gt;Put alerts to sleep by right-clicking&lt;/i&gt;
 - &lt;i&gt;Auto-close letters&lt;/i&gt;
 
-    Timers and letter categories can be set in mod settings.
+&lt;b&gt;Mod Compatibility&lt;/b&gt;
+- Save game safe.
+- Currently incompatible with Toggles.
+
+&lt;b&gt;Instructions&lt;/b&gt;
+Add Better Notifications anywhere in your load order. If you're experiencing issues or missing features, try putting it further towards the end.
+
+- Right-click an alert on screen to hide it. Set the timer in the mod settings.
+- Set letters of specific categories to auto-close. Set the categories and timer in the mod settings.
+
+&lt;b&gt;Usage&lt;/b&gt;
+Use however you wish. Source is on GitHub[github.com]. Drop me a message if you do.
+Suggestions and questions are welcome! Post in a Discussions thread or send me an e-mail at massa@krafs.net.
+Want to translate the mod? Send me a pull request on GitHub[github.com] or an e-mail.
+
+&lt;b&gt;License&lt;/b&gt;
+MIT
   </description>
 </ModMetaData>

@@ -24,7 +24,7 @@ namespace BetterNotifications
                         if (!TimedLetters.ContainsKey(letter))
                             TimedLetters.Add(letter, ticks);
 
-                        if ((TimedLetters[letter] + (GenDate.TicksPerHour * Controller.LetterTime)) < ticks)
+                        if ((TimedLetters[letter] + (GenDate.TicksPerHour * Controller.LetterTime)) <= ticks)
                         {
                             Find.LetterStack.RemoveLetter(letter);
                             TimedLetters.Remove(letter);

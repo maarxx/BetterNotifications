@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterNotifications", "BetterNotifications.csproj", "{87EE2A21-8643-44EE-8F01-893E0884DBF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterNotifications", "BetterNotifications\BetterNotifications.csproj", "{87EE2A21-8643-44EE-8F01-893E0884DBF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
