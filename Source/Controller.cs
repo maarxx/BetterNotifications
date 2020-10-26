@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection;
 using Verse;
@@ -14,7 +14,7 @@ namespace BetterNotifications
             ModHandler.InitSettings();
 
             // Do patches
-            HarmonyInstance harmony = HarmonyInstance.Create("BetterNotifications");
+            Harmony harmony = new Harmony("BetterNotifications");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
